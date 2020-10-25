@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap");
+
 html {
   font-size: 62.5%;
   box-sizing: border-box;
@@ -10,9 +12,10 @@ body,
 body,
 input,
 select,
+button,
 textarea {
   font-size: 1.6rem;
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-family: "Montserrat", Helvetica, Arial, sans-serif;
 }
 .grid_container {
   display: grid;
@@ -46,4 +49,77 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.content {
+  display: flex;
+  flex-wrap: wrap;
+}
+.main {
+  flex: 3 60rem;
+}
+.sidebar {
+  flex: 1 20rem;
+}
+
+/* Products Item */
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+.products li {
+  flex: 0 1 29rem;
+  height: 47rem;
+  margin: 1rem;
+  border-radius: 0.2rem;
+  box-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, 0.1);
+}
+.product {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.product img {
+  max-width: 37rem;
+  max-height: 37rem;
+  border-radius: 0.2rem 0.2rem 0 0;
+}
+.product a {
+  text-decoration: none;
+}
+.product p {
+  margin: 0 0.5rem;
+  text-align: center;
+}
+.product_price {
+  display: flex;
+  margin: 0 1rem 2rem;
+  justify-content: space-between;
+  align-items: center;
+}
+.product_price div,
+.product_price button {
+  text-align: center;
+  flex: 1;
+}
+.product_price div {
+  font-size: 2rem;
+}
+.button {
+  padding: 1rem;
+  outline: none;
+  border: 0.1rem #c0c0c0 solid;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+.button:hover {
+  border: 0.1rem #808080 solid;
+}
+.button.primary {
+  background-color: #f0c040;
 }
