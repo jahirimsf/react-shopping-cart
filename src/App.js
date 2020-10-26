@@ -28,6 +28,25 @@ const App = () => {
   };
   const sortProducts = (event) => {
     console.log(event.target.value);
+    const sort = event.target.value;
+    setState((state) => ({
+      sort: sort,
+      products: state.products
+        .slice()
+        .sort((a, b) =>
+          sort === "lowest"
+            ? a.price > b.price
+              ? 1
+              : -1
+            : sort === "highest"
+            ? a.price < b.price
+              ? 1
+              : -1
+            : a._id < b._id
+            ? 1
+            : -1
+        ),
+    }));
   };
   return (
     <div className="grid_container">
