@@ -202,3 +202,27 @@ input {
   flex-direction: column;
   padding: 1rem;
 }
+
+/* Product Details */
+
+.product_details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-height: 96vh;
+}
+.product_details img {
+  max-width: 46rem;
+  max-height: 80vh;
+  margin: 0 auto;
+}
+.products_details_description {
+  flex: 1 1;
+  margin: 1rem;
+}
+.close_modal {
+  position: absolute;
+  right: 1rem;
+  top: 2.5rem;
+  z-index: 1000;
+}
