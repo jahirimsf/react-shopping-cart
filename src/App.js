@@ -1,24 +1,51 @@
 // feature-1 added
 
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
+import Cart from "./components/Cart";
 import Filter from "./components/Filter";
 import Products from "./components/Products";
 import data from "./data.json";
 
-const App = () => {
-  const [state, setState] = useState({
-    products: data.products,
-    size: "",
-    sort: "",
-  });
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      products: data.products,
+      cartItems: [],
+      size: "",
+      sort: "",
+    };
+  }
 
-  const filterProducts = (event) => {
+  removeItems = (product) => {
+    const cartItems = this.state.cartItems.slice();
+    console.log(product);
+
+    this.setState({
+      cartItems: cartItems.filter((x) => x._id !== product._id),
+    });
+  };
+  addToCart = (product) => {
+    const cartItems = this.state.cartItems.slice();
+    let alreadyInCart = false;
+    cartItems.forEach((item) => {
+      if (item._id === product._id) {
+        item.count++;
+        alreadyInCart = true;
+      }
+    });
+    if (!alreadyInCart) {
+      cartItems.push({ ...product, count: 1 });
+    }
+    this.setState({ cartItems });
+  };
+  filterProducts = (event) => {
     console.log(event.target.value);
     if (event.target.value === "") {
-      setState({ size: "", products: data.products });
+      this.setState({ size: "", products: data.products });
     } else {
-      setState({
+      this.setState({
         size: event.target.value,
         products: data.products.filter(
           (product) => product.availableSizes.indexOf(event.target.value) >= 0
@@ -26,10 +53,10 @@ const App = () => {
       });
     }
   };
-  const sortProducts = (event) => {
+  sortProducts = (event) => {
     console.log(event.target.value);
     const sort = event.target.value;
-    setState((state) => ({
+    this.setState((state) => ({
       sort: sort,
       products: state.products
         .slice()
@@ -48,29 +75,39 @@ const App = () => {
         ),
     }));
   };
-  return (
-    <div className="grid_container">
-      <header>
-        <a href="/">React Shopping Cart</a>
-      </header>
-      <main>
-        <div className="content">
-          <div className="main">
-            <Filter
-              count={state.products.length}
-              size={state.size}
-              sort={state.sort}
-              filterProducts={filterProducts}
-              sortProducts={sortProducts}
-            />
-            <Products products={state.products} />
+  render() {
+    return (
+      <div className="grid_container">
+        <header>
+          <a href="/">React Shopping Cart</a>
+        </header>
+        <main>
+          <div className="content">
+            <div className="main">
+              <Filter
+                count={this.state.products.length}
+                size={this.state.size}
+                sort={this.state.sort}
+                filterProducts={this.filterProducts}
+                sortProducts={this.sortProducts}
+              />
+              <Products
+                products={this.state.products}
+                addToCart={this.addToCart}
+              />
+            </div>
+            <div className="sidebar">
+              <Cart
+                removeItems={this.removeItems}
+                cartItems={this.state.cartItems}
+              />
+            </div>
           </div>
-          <div className="sidebar">Cart Items</div>
-        </div>
-      </main>
-      <footer>this is footer</footer>
-    </div>
-  );
-};
+        </main>
+        <footer>this is footer</footer>
+      </div>
+    );
+  }
+}
 
 export default App;
