@@ -6,6 +6,8 @@ import Cart from "./components/Cart";
 import Filter from "./components/Filter";
 import Products from "./components/Products";
 import data from "./data.json";
+import store from "./store";
+import { Provider } from "react-redux";
 
 class App extends React.Component {
   constructor() {
@@ -86,36 +88,38 @@ class App extends React.Component {
   };
   render() {
     return (
-      <div className="grid_container">
-        <header>
-          <a href="/">React Shopping Cart</a>
-        </header>
-        <main>
-          <div className="content">
-            <div className="main">
-              <Filter
-                count={this.state.products.length}
-                size={this.state.size}
-                sort={this.state.sort}
-                filterProducts={this.filterProducts}
-                sortProducts={this.sortProducts}
-              />
-              <Products
-                products={this.state.products}
-                addToCart={this.addToCart}
-              />
+      <Provider store={store}>
+        <div className="grid_container">
+          <header>
+            <a href="/">React Shopping Cart</a>
+          </header>
+          <main>
+            <div className="content">
+              <div className="main">
+                <Filter
+                  count={this.state.products.length}
+                  size={this.state.size}
+                  sort={this.state.sort}
+                  filterProducts={this.filterProducts}
+                  sortProducts={this.sortProducts}
+                />
+                <Products
+                  products={this.state.products}
+                  addToCart={this.addToCart}
+                />
+              </div>
+              <div className="sidebar">
+                <Cart
+                  removeItems={this.removeItems}
+                  cartItems={this.state.cartItems}
+                  createOrder={this.createOrder}
+                />
+              </div>
             </div>
-            <div className="sidebar">
-              <Cart
-                removeItems={this.removeItems}
-                cartItems={this.state.cartItems}
-                createOrder={this.createOrder}
-              />
-            </div>
-          </div>
-        </main>
-        <footer>this is footer</footer>
-      </div>
+          </main>
+          <footer>this is footer</footer>
+        </div>
+      </Provider>
     );
   }
 }
