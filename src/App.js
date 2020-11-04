@@ -10,48 +10,6 @@ import store from "./store";
 import { Provider } from "react-redux";
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      //products: data.products,
-      cartItems: localStorage.getItem("cartItems")
-        ? JSON.parse(localStorage.getItem("cartItems"))
-        : [],
-      // size: "",
-      // sort: "",
-    };
-  }
-  createOrder = (order) => {
-    alert("Need to implement" + order.name);
-  };
-  removeItems = (product) => {
-    const cartItems = this.state.cartItems.slice();
-    console.log(product);
-
-    this.setState({
-      cartItems: cartItems.filter((x) => x._id !== product._id),
-    });
-    localStorage.setItem(
-      "cartItems",
-      JSON.stringify(cartItems.filter((x) => x._id !== product._id))
-    );
-  };
-  addToCart = (product) => {
-    const cartItems = this.state.cartItems.slice();
-    let alreadyInCart = false;
-    cartItems.forEach((item) => {
-      if (item._id === product._id) {
-        item.count++;
-        alreadyInCart = true;
-      }
-    });
-    if (!alreadyInCart) {
-      cartItems.push({ ...product, count: 1 });
-    }
-    this.setState({ cartItems });
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  };
-
   render() {
     return (
       <Provider store={store}>
@@ -63,14 +21,10 @@ class App extends React.Component {
             <div className="content">
               <div className="main">
                 <Filter />
-                <Products addToCart={this.addToCart} />
+                <Products />
               </div>
               <div className="sidebar">
-                <Cart
-                  removeItems={this.removeItems}
-                  cartItems={this.state.cartItems}
-                  createOrder={this.createOrder}
-                />
+                <Cart />
               </div>
             </div>
           </main>
